@@ -29,8 +29,6 @@ def solve(n, acc):
         if -1 != c[n][i] and len(s) - (c[n][i]) + acc >= k and acc + 1 <= k:
             ans = chr(97 + i) + solve(c[n][i] + 1, acc + 1)
             return ans
-            if len(ans) == k - acc:
-                return ans
     return ""
 
 
