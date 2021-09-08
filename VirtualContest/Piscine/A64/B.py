@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+import math
+import heapq
+import sys
+import itertools
+from collections import deque
+
+sys.setrecursionlimit(1000000)
+MOD = 10 ** 9 + 7
 n = int(input())
 
 c = list((input().split()))
@@ -21,19 +30,24 @@ def dfs(node, pre):
         else:
             dp[node][1] = 1
     else:
+        tmp_0 = 1
+        tmp_1 = 1
+        tmp_2 = 1
         for next in path[node]:
             if next != pre:
                 dfs(next, node)
                 if c[node] == "a":
-                    dp[node][0] *= dp[next][0] + dp[next][2]
+                    tmp_0 *= dp[next][0] + dp[next][2]
                 else:
-                    dp[node][1] *= dp[next][0] + dp[next][2]
-                dp[node][2] += dp[next][0] + dp[next][1] + dp[next][2] * 2
+                    tmp_1 *= dp[next][1] + dp[next][2]
+                tmp_2 *= dp[next][0] + dp[next][1] + (dp[next][2] * 2)
         if c[node] == "a":
-            dp[node][2] -= dp[node][0]
+            dp[node][0] += tmp_0
+            dp[node][2] += tmp_2 - dp[node][0]
         else:
-            dp[node][2] -= dp[node][1]
+            dp[node][1] += tmp_1
+            dp[node][2] += tmp_2 - dp[node][1]
 
 
 dfs(0, -1)
-print(dp[0][2])
+print(dp[0][2] % MOD)
