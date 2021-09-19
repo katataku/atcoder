@@ -13,13 +13,13 @@ n = int(input())
 
 p = list(map(float, input().split()))
 p.insert(0, 0)
-dp = [{} for i in range(n + 1)]
+dp = [[-1 for j in range(n + 1)] for i in range(n + 1)]
 
 dp[0][0] = 1
 
 
 def solve(i, j):
-    if j not in dp[i]:
+    if dp[i][j] == -1:
         dp[i][j] = 0
         if i > 0 and i >= j:
             dp[i][j] = solve(i - 1, j) * (1 - p[i])
